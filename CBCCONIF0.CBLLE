@@ -1,0 +1,25 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. CBCCONIF0.
+       AUTHOR. .
+       INSTALLATION.  where.
+       DATE-WRITTEN.  24/12/2023.
+       DATE-COMPILED. 24/12/2023.
+       SECURITY.
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SOURCE-COMPUTER. pc.
+       OBJECT-COMPUTER. pc.
+       SPECIAL-NAMES.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+       DATA DIVISION.
+        FILE SECTION.
+        WORKING-STORAGE SECTION.
+        LINKAGE SECTION.
+       PROCEDURE DIVISION.
+        DECLARATIVES.
+        END DECLARATIVES.
+        main-processing SECTION.
+         mainline-paragraph.
+             
+             STOP RUN.
