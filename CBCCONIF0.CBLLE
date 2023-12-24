@@ -24,12 +24,27 @@
                INCLUDE SQLCA
            END-EXEC.
       *-----------------------------------------------------------------
+       01  W-FECPRO             PIC S9(08).
+       01  FILLER               REDEFINES W-FECPRO.
+           03 W-FECAA-PRO       PIC 9(04).
+           03 W-FECMM-PRO       PIC 9(02).
+           03 W-FECDD-PRO       PIC 9(02).
+       01  W-FECPER             PIC X(10).
+       01  FILLER               REDEFINES W-FECPER.
+           03 W-FECAA-PER       PIC 9(04).
+           03 W-TAB001          PIC X(01).
+           03 W-FECMM-PER       PIC 9(02).
+           03 W-TAB002          PIC X(01).
+           03 W-FECDD-PER       PIC 9(02).
+      *-----------------------------------------------------------------
       * Data Access ----------------------------------------------------
       *-----------------------------------------------------------------
        01  PLTFECHAS-REC.
            COPY DDS-REGFECHAS OF PLTFECHAS.
        01  OPGPCONTA-REC.
            COPY DDS-REGOPGPCON OF OPGPCONTA.    
+       01  CBCTRNMOV-REC.
+           COPY DDS-REGTRNMON OF CBCTRNMOV.    
       *-----------------------------------------------------------------
        LINKAGE SECTION.
       *-----------------------------------------------------------------
@@ -60,13 +75,51 @@
            .
       *-----------------------------------------------------------------
        PROCESAR-MOVIMIENTO-TARJETA.
-      *-----------------------------------------------------------------     
+      *-----------------------------------------------------------------
+           INITIALIZE REGOPGPCON
+           MOVE "2101  "              TO IJUEGO OF REGOPGPCON
+           MOVE "COP"                 TO CODDIV OF REGOPGPCON
+           MOVE "Tarjeta de Credito TARCRED"
+                                      TO IJUEGO OF REGOPGPCON
+           MOVE FECPRO OF REGTRNMON   TO W-FECPRO
+           MOVE W-FECAA-PRO           TO W-FECAA-PER
+           MOVE W-FECMM-PRO           TO W-FECMM-PER
+           MOVE W-FECDD-PRO           TO W-FECDD-PER
+           MOVE "-"                   TO W-TAB001 W-TAB002
+           MOVE W-FECPER              TO FECPER OF REGOPGPCON
+                                         FECDOC OF REGOPGPCON
+           EVALUATE ( TIPMOV OF REGTRNMON )
+              WHEN ( 1 )  MOVE VLRTRN OF REGTRNMON
+                                      TO VLRDEB OF REGOPGPCON
+              WHEN ( 2 )  MOVE VLRTRN OF REGTRNMON
+                                      TO VLRCRE OF REGOPGPCON
+           END-EVALUATE                                                                                                
+           PERFORM INSERT-OPGPCONTA   THRU F-INSERT-OPGPCONTA
+           .
+      *-----------------------------------------------------------------
+       INSERT-OPGPCONTA.
+      *-----------------------------------------------------------------
+           EXEC SQL
+               INSERT INTO OPGPCONTA
+                   VALUES ( :REGOPGPCON) 
+                   WITH NC 
+           END-EXEC 
+           IF ( SQLCODE = ZEROS )
+               ROLLBACK
+           ELSE
+               COMMIT    
+           END-IF
+           .
+      *-----------------------------------------------------------------
+       F-INSERT-OPGPCONTA.
+      *-----------------------------------------------------------------
+           EXIT.      
       *-----------------------------------------------------------------
        DECLARE-CURSOR.
       *-----------------------------------------------------------------
            EXEC SQL
                DECLARE CURONE SCROLL CURSOR FOR 
-                   SELECT * FROM MOVIMIENTO
+                   SELECT * FROM CBCTRNMOV
            END-EXEC
            .    
       *-----------------------------------------------------------------
@@ -88,7 +141,7 @@
        READ-CURSOR.
       *-----------------------------------------------------------------
            EXEC SQL
-               FETCH NEXT FROM CURONE INTO :REGMOVIMIENTO 
+               FETCH NEXT FROM CURONE INTO :REGTRNMON 
            END-EXEC 
            .
       *-----------------------------------------------------------------

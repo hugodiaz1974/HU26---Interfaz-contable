@@ -1,0 +1,11 @@
+  A                                      UNIQUE
+  A          R REGTRACON                 
+  A            SISTRN         3P         TEXT('Sistema            ')
+  A            PROTRN         3P         TEXT('Producto           ')
+  A            TRATRN         3P         TEXT('Transaccion        ')
+  A            DESTRN        60A         TEXT('Descripcion        ')
+  A            TIPTRN         1P         TEXT('Debito/Credito     ')
+  A            CUENTA        14P         TEXT('Cuenta contable    ')        
+  A          K SISTRN  
+  A          K PROTRN  
+  A          K TRATRN      
