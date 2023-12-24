@@ -1,0 +1,29 @@
+  A          R REGOPGPCON
+  A            IJUEGO         6A         TEXT('Juego Libros       ')
+  A            FECPER        10A         TEXT('Fecha Periodo      ')
+  A            CODDIV         3A         TEXT('Codigo Divisa      ')
+  A            CATEGO        25A         TEXT('Categoria          ')
+  A            APLORI        25A         TEXT('Aplicativo Origen  ')
+  A            EMPRES         3A         TEXT('Empresa            ')
+  A            CODUEN         4A         TEXT('UEN Unidad Negocio ')
+  A            CENCOS         4A         TEXT('Centro de Costo    ')
+  A            CUENTA        14P         TEXT('Cuenta contable    ') 
+  A            USOLOC         4A         TEXT('Uso Local          ')
+  A            CIUDAD         5A         TEXT('Codigo DANE ciudad ')
+  A            INTCOM         3A         TEXT('Intercompañia      ') 
+  A            FUTURO         3A         TEXT('Futuro 000         ')
+  A            VLRDEB        15P 2       TEXT('Valor Debito       ')
+  A            VLRCRE        15P 2       TEXT('Valor Credito      ') 
+  A            NOMLOT        30A         TEXT('Nombre Lote        ')
+  A            DESLOT        60A         TEXT('Descripcion Lote   ')
+  A            NOMASI        30A         TEXT('Nombre del Asiento ')
+  A            DESASI        60A         TEXT('Descripcion Asiento')
+  A            DESMOV        60A         TEXT('Descripcion Mvto   ')
+  A            NITTER        15P         TEXT('Nit del Tercero    ')
+  A            NUMDOC         7A         TEXT('Nro Documento vacio')
+  A            FECDOC        10A         TEXT('Fecha transaccion  ')
+  A          K IJUEGO
+  A          K FECPER
+  A          K CODDIV
+  A          K CATEGO
+  A          K APLORI
